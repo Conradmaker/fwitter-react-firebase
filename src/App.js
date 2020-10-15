@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RouterComponents from "components/Router";
 import { authService } from "mybase";
 
-function App() {
-  console.log(authService.currentUser);
-  const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
+export default function App() {
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    authService.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      setInit(true);
+    });
+  }, []);
   return (
     <>
-      <RouterComponents isLoggedIn={isLoggedIn} />
+      {init && <RouterComponents isLoggedIn={isLoggedIn} />}
       <footer>&copy; {new Date().getFullYear()} fwitter</footer>
     </>
   );
 }
-
-export default App;
