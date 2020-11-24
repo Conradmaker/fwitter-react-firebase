@@ -1,7 +1,7 @@
-import { dbService } from "mybase";
-import React, { useState } from "react";
+import {dbService} from "mybase";
+import React, {useState} from "react";
 
-export default function Fweet({ fweet, isOwner }) {
+export default function Fweet({fweet, isOwner}) {
   const [editing, setEditing] = useState(false);
   const [newFweet, setNewFweet] = useState(fweet.text);
   const onDelete = async () => {
